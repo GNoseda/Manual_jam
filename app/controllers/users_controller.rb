@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
     before_action :set_user, only: [:show]
+    skip_before_action :require_login, only: [:new, :create]
 
     def new
         @user = User.new
@@ -10,9 +11,10 @@ class UsersController < ApplicationController
         
         respond_to do |format|
           if @user.save
-            format.html { redirect_to @user, notice: 'Usuario creado exitosamente!.' }
+            format.html { redirect_to @user, notice: 'User successfully created!.' }
             format.json { render :show, status: :created, location: @user }
-          else
+            session[:user_id] = @user.id
+        else
             format.html { render :new }
             format.json { render json: @user.errors, status: :unprocessable_entity }
           end

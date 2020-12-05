@@ -1,5 +1,6 @@
 class StoriesController < ApplicationController
   before_action :set_story, only: [:show, :edit, :update, :destroy]
+  skip_before_action :require_login, only: :index
 
   # GET /stories
   # GET /stories.json
@@ -25,7 +26,9 @@ class StoriesController < ApplicationController
   # POST /stories.json
   def create
     @story = Story.new(story_params)
+    @user = helpers.current_user
 
+    @story.user_id = @user.id
     respond_to do |format|
       if @story.save
         format.html { redirect_to @story, notice: 'Story was successfully created.' }
@@ -69,6 +72,6 @@ class StoriesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def story_params
-      params.require(:story).permit(:title, :picture, :content)
+      params.require(:story).permit(:title, :picture, :content, :user_id)
     end
 end

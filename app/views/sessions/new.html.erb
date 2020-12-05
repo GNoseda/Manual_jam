@@ -1,0 +1,19 @@
+<h2>Sign In</h2>
+<div class="container">
+  <%= form_with url: sessions_path, :html => {:class => "form-horizontal center col-6"} ,  local: true do  %>
+    <div class="field form-group row">    
+      <%= label_tag :email, "EMail", class: "col-1" %>
+      <%= email_field_tag :email, params[:email], placeholder: "Enter your EMail", required: true %>
+    </div>
+
+    <div class="field form-group row">
+      <%= label_tag :password, "Contraseña",class: "col-1" %>
+      <%= password_field_tag :password, params[:password], placeholder: "Enter your password", required: true %>
+    </div>
+
+    <br>
+    <div class="actions">
+      <%= submit_tag "Sing In", class: "btn"%>
+    </div>
+  <% end %>
+</div>
